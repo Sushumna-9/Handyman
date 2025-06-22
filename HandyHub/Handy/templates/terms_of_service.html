@@ -1,0 +1,35 @@
+<!-- The Modal -->
+<div id="termsModal" style="display:none; position:fixed; z-index:999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.4);">
+    <div style="background-color:#fff; margin:10% auto; padding:20px; border:1px solid #888; width:80%; max-width:600px; border-radius:10px; position:relative;">
+      
+      <!-- Close button -->
+      <span onclick="closeModal()" style="color:#aaa; position:absolute; top:10px; right:20px; font-size:28px; font-weight:bold; cursor:pointer;">&times;</span>
+      
+      <h2 style="text-align:center;">HandyHub Terms of Service</h2>
+      <hr>
+      <p><strong>1. Service Overview:</strong> HandyHub connects customers with verified handymen for services like electrical repairs, plumbing, carpentry, and gardening.</p>
+      <p><strong>2. User Responsibilities:</strong> Users must provide accurate information during booking and respect the time and effort of service providers.</p>
+      <p><strong>3. Payment Policy:</strong> All payments must be made as per the pricing shown before confirmation. HandyHub does not handle cash transactions directly between customers and handymen.</p>
+      <p><strong>4. Cancellation Policy:</strong> Cancellations made less than 1 hour before a scheduled service may be subject to a penalty.</p>
+      <p><strong>5. Feedback & Reviews:</strong> Customers are encouraged to leave honest feedback and ratings after service completion to help improve our platform.</p>
+      <p><strong>6. Account Security:</strong> Keep your login details confidential. HandyHub is not responsible for misuse due to user negligence.</p>
+      <p><strong>7. Changes to Terms:</strong> HandyHub reserves the right to update these terms at any time. Continued use after changes implies agreement.</p>
+      <p style="text-align:center; margin-top:20px;">
+        <button onclick="closeModal()" style="padding:8px 16px; border:none; background:#007bff; color:white; border-radius:5px; cursor:pointer;">Close</button>
+      </p>
+    </div>
+  </div>
+  
+  <!-- JavaScript to show modal on page load and close with redirect -->
+  <script>
+    // Show the Terms of Service modal automatically on page load
+    window.onload = function() {
+      document.getElementById('termsModal').style.display = 'block';
+    };
+  
+    // Function to close the modal and go back to the previous page
+    function closeModal() {
+      document.getElementById('termsModal').style.display = 'none';  // Hide modal
+      window.history.back();  // Go back to the previous page
+    }
+  </script>

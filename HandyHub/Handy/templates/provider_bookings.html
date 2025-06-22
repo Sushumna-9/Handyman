@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>My Bookings</h2>
+
+    {% if bookings %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Address</th>
+                <th>Mobile Number</th>
+                <th>Service</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.customer.first_name }} {{ booking.customer.last_name }}</td>
+                <td>{{booking.customer.address}}</td>
+                <td>{{booking.customer.phone}}</td>
+                <td>{{ booking.service.name }}</td>
+                <td>{{ booking.booking_date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ booking.booking_time.strftime('%H:%M') }}</td>
+                <td>
+                    {% if booking.status == "Pending" %}
+                        <span class="badge bg-warning">{{ booking.status }}</span>
+                    {% elif booking.status == "Confirmed" %}
+                        <span class="badge bg-success">{{ booking.status }}</span>
+                    {% elif booking.status == "Rejected" %}
+                        <span class="badge bg-danger">{{ booking.status }}</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{{ booking.status }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if booking.status == "Pending" %}
+                        <form action="{{ url_for('views.confirm_booking', booking_id=booking.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-success btn-sm">Confirm</button>
+                        </form>
+                        <form action="{{ url_for('views.reject_booking', booking_id=booking.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                        </form>
+                    
+                    {% elif booking.status == "Confirmed" %}
+                        <form action="{{ url_for('views.complete_booking', booking_id=booking.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-primary btn-sm">Mark as Completed</button>
+                        </form>
+                    
+                    {% elif booking.status == "Completed" %}
+                            <button class="btn btn-secondary btn-sm" disabled>No Actions</button>
+                    
+                    {% else %}
+                        <button class="btn btn-secondary btn-sm" disabled>No Actions</button>
+                    {% endif %}
+                </td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No bookings available.</p>
+    {% endif %}
+</div>
+{% endblock %}

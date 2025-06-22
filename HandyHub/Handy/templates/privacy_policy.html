@@ -1,0 +1,38 @@
+<!-- Link to open the modal for Privacy Policy -->
+<a href="#" onclick="document.getElementById('privacyModal').style.display='block'" style="color: #007bff;">Privacy Policy</a>
+
+<!-- The Modal -->
+<div id="privacyModal" style="display:none; position:fixed; z-index:999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.4);">
+  <div style="background-color:#fff; margin:10% auto; padding:20px; border:1px solid #888; width:80%; max-width:600px; border-radius:10px; position:relative;">
+    
+    <!-- Close button -->
+    <span onclick="closePrivacyModal()" style="color:#aaa; position:absolute; top:10px; right:20px; font-size:28px; font-weight:bold; cursor:pointer;">&times;</span>
+    
+    <h2 style="text-align:center;">HandyHub Privacy Policy</h2>
+    <hr>
+    <p><strong>1. Information Collection:</strong> HandyHub collects personal information such as your name, email address, phone number, and service-related data to provide you with an optimized user experience.</p>
+    <p><strong>2. Use of Information:</strong> The information collected is used for booking, customer support, processing payments, and improving our services.</p>
+    <p><strong>3. Data Security:</strong> HandyHub takes necessary measures to ensure the security and confidentiality of your personal data. We use encryption and secure servers to protect your information.</p>
+    <p><strong>4. Sharing of Information:</strong> HandyHub does not share personal data with third parties, except for trusted partners for service fulfillment and payment processing.</p>
+    <p><strong>5. Cookies:</strong> HandyHub uses cookies to enhance user experience. By using our website, you consent to the use of cookies.</p>
+    <p><strong>6. Data Retention:</strong> Your personal data is retained as long as necessary to fulfill the purpose for which it was collected or as required by law.</p>
+    <p><strong>7. Updates to Policy:</strong> HandyHub reserves the right to update this privacy policy at any time. Any changes will be posted on this page, and continued use of the service implies acceptance of these updates.</p>
+    <p style="text-align:center; margin-top:20px;">
+      <button onclick="closePrivacyModal()" style="padding:8px 16px; border:none; background:#007bff; color:white; border-radius:5px; cursor:pointer;">Close</button>
+    </p>
+  </div>
+</div>
+
+<!-- JavaScript to show modal on page load and close with redirect -->
+<script>
+  // Show the Privacy Policy modal automatically on page load
+  window.onload = function() {
+    document.getElementById('privacyModal').style.display = 'block';
+  };
+
+  // Function to close the modal and go back to the previous page
+  function closePrivacyModal() {
+    document.getElementById('privacyModal').style.display = 'none';  // Hide modal
+    window.history.back();  // Go back to the previous page
+  }
+</script>

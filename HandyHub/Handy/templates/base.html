@@ -1,0 +1,164 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static' ,filename='styles.css')}}"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+      <div class="container">
+          <img src="{{ url_for('static', filename='logo.png') }}" alt="HandyHub Logo" class="navbar-logo">
+          <a class="navbar-brand" href="/">HandyHub</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <!-- Common Links for Both Users -->
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('views.about') }}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('views.services') }}">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('views.handyman') }}">HandyMan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('views.contact') }}">Contact Us</a>
+                </li>
+        
+                {% if current_user.is_authenticated %}
+                <!-- Profile Dropdown Menu -->
+                <li class="nav-item dropdown ms-lg-3">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="ms-2 fw-bold fs-6 text-dark">@{{ current_user.first_name }} {{ current_user.last_name }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+        
+                        {% if current_user.role == "provider" %}
+                        <!-- Provider-Specific Features -->
+                        <li><a class="dropdown-item" href="{{ url_for('views.provider_bookings') }}"><i class="fas fa-clipboard-list"></i> Bookings</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('views.provider_profile') }}"><i class="fas fa-user"></i> Profile</a></li>
+        
+                        {% elif current_user.role == "customer" %}
+                        <!-- Customer-Specific Features -->
+                        <li><a class="dropdown-item" href="{{ url_for('views.handyman') }}"><i class="fas fa-calendar-check"></i> Book Now</a></li>
+                        <li><a class="dropdown-item"  href="{{ url_for('views.booking_history') }}"><i class="fas fa-history"></i> History</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('views.customer_profile') }}"><i class="fas fa-user"></i> Profile</a></li>
+                        {% endif %}
+        
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </li>
+        
+                {% else %}
+                <!-- Authentication Links for Non-Logged-in Users -->
+                <!-- Provider Authentication Dropdown -->
+                <li class="nav-item dropdown ms-lg-3">
+                    <a class="nav-link dropdown-toggle" href="#" id="providerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Provider
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="providerDropdown">
+                        <li><a class="dropdown-item" href="/auth/provider-login">Login</a></li>
+                        <li><a class="dropdown-item" href="/auth/provider-signup">Register</a></li>
+                    </ul>
+                </li>
+        
+                <!-- Customer Authentication Dropdown -->
+                <li class="nav-item dropdown ms-lg-3">
+                    <a class="nav-link dropdown-toggle" href="#" id="customerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Customer
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="customerDropdown">
+                        <li><a class="dropdown-item" href="/auth/customer-login">Login</a></li>
+                        <li><a class="dropdown-item" href="/auth/customer-signup">Register</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        
+      </div>
+  </nav>
+  
+
+    {% block content %} 
+    <!-- Page specific content will go here -->
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-top py-5">
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+              <div class="footer-info">
+                <h3><i class="fas fa-tools me-2"></i>HandyHub</h3>
+                <p class="mb-4">Your trusted partner for professional home services.</p>
+                <p><i class="fas fa-phone me-2"></i>(555) 123-4567</p>
+                <p><i class="fas fa-envelope me-2"></i>info@handyhub.com</p>
+                <p><i class="fas fa-map-marker-alt me-2"></i>123 Service Street, City, Country</p>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+              <div class="row">
+                <div class="col-6">
+                  <h4>Quick Links</h4>
+                  <ul class="footer-links">
+                    <li><a href="{{ url_for('views.about') }}">About Us</a></li>
+                    <li><a href="{{ url_for('views.services') }}">Services</a></li>
+                    <li><a href="{{ url_for('views.contact') }}">Contact</a></li>
+                  </ul>
+                </div>
+                <div class="col-6">
+                  <h4>Services</h4>
+                  <ul class="footer-links">
+                    <li><a href="{{ url_for('views.services') }}#electrical">Electrical</a></li>
+                    <li><a href="{{ url_for('views.services') }}#plumbing">Plumbing</a></li>
+                    <li><a href="{{ url_for('views.services') }}#carpentry">Carpentry</a></li>
+                    <li><a href="{{ url_for('views.services') }}#gardening">Gardening</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+              <h4>Connect With Us</h4>
+              <p class="mb-3">Follow us on social media for updates and tips</p>
+ 
+              <div class="social-links mb-4">
+                <a href="https://www.facebook.com" class="facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://twitter.com" class="twitter"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://instagram.com" class="instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://linkedin.com" class="fa-brands fa-linkedin-in"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom py-3">
+        <div class="container text-center">
+          <div class="copyright">
+            © <span id="currentYear">2024</span> <strong>HandyHub</strong>. All Rights Reserved
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+  </body>
+</html>

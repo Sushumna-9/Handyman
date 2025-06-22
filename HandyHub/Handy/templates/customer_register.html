@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Register Section -->
+<section class="auth-section">
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show mt-3" role="alert">
+        {{ message|safe}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="auth-card p-4 rounded-3">
+          <div class="text-center mb-4">
+            <i class="fas fa-user-plus auth-icon"></i>
+            <h2>Create Account</h2>
+            <p class="text-muted">Join HandyHub and get access to professional home services</p>
+          </div>
+
+          <!-- Signup Form -->
+          <form id="registerForm" action="{{ url_for('auth.customer_signup') }}" method="post">
+            <!-- CSRF Token (if using Flask-WTF) -->
+            {% if csrf_token %}
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            {% endif %}
+
+            <div class="row">
+              <!-- First Name -->
+              <div class="col-md-6 mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                  <input type="text" class="form-control" id="firstName" name="firstName"
+                    placeholder="Enter first name" required>
+                </div>
+              </div>
+              
+              <!-- Last Name -->
+              <div class="col-md-6 mb-3">
+                <label for="lastName" class="form-label">Last Name</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                  <input type="text" class="form-control" id="lastName" name="lastName"
+                    placeholder="Enter last name" required>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email Address</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input type="email" class="form-control" id="email" name="email"
+                  placeholder="Enter your email" required autocomplete="email">
+              </div>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone Number</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                <input type="tel" class="form-control" id="phone" name="phone"
+                  placeholder="Enter phone number" required>
+              </div>
+            </div>
+            <!-- Address Field -->
+            <div class="mb-3">
+              <label for="address" class="form-label">Address</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                <input type="text" class="form-control" id="address" name="address" placeholder="Enter your address" required>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" class="form-control" id="password" name="password"
+                  placeholder="Enter password" required autocomplete="new-password">
+                <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              <div class="form-text">Password must be at least 8 characters long and include numbers and special characters.</div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                  placeholder="Confirm password" required>
+              </div>
+              <small id="passwordMatchError" class="text-danger d-none">Passwords do not match!</small>
+            </div>
+
+            <!-- Terms & Conditions -->
+            <div class="mb-4">
+              <input type="checkbox" class="form-check-input" id="terms" required>
+                    <label class="form-check-label" for="terms">
+                      I agree to the <a href="{{ url_for('views.terms_of_service') }}" class="text-primary">Terms of Service</a> and
+                      <a href="{{ url_for('views.privacy_policy') }}" class="text-primary">Privacy Policy</a>
+            </div>
+
+            <!-- Create Account Button -->
+            <button type="submit" class="btn btn-primary w-100 mb-3" id="registerBtn">Create Account</button>
+
+            <!-- Login Link -->
+            <div class="text-center">
+              <p class="mb-0">Already have an account?
+                <a href="{{ url_for('auth.customer_login') }}" class="text-primary">Login</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JavaScript for Password Validation & Toggle -->
+<script>
+  document.getElementById('togglePassword').addEventListener('click', function () {
+    const passwordField = document.getElementById('password');
+    const icon = this.querySelector('i');
+    
+    if (passwordField.type === "password") {
+      passwordField.type = "text";
+      icon.classList.remove("fa-eye");
+      icon.classList.add("fa-eye-slash");
+    } else {
+      passwordField.type = "password";
+      icon.classList.remove("fa-eye-slash");
+      icon.classList.add("fa-eye");
+    }
+  });
+
+  // Password confirmation validation
+  document.getElementById('registerForm').addEventListener('submit', function (e) {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const errorMsg = document.getElementById('passwordMatchError');
+    
+    if (password !== confirmPassword) {
+      e.preventDefault(); // Prevent form submission
+      errorMsg.classList.remove('d-none');
+    } else {
+      errorMsg.classList.add('d-none');
+    }
+  });
+ 
+  // Toggle password visibility
+  document.getElementById('togglePassword').addEventListener('click', function () {
+    const passwordField = document.getElementById('password');
+    const icon = this.querySelector('i');
+    
+    if (passwordField.type === "password") {
+      passwordField.type = "text";
+      icon.classList.remove("fa-eye");
+      icon.classList.add("fa-eye-slash");
+    } else {
+      passwordField.type = "password";
+      icon.classList.remove("fa-eye-slash");
+      icon.classList.add("fa-eye");
+    }
+  });
+
+  // Form validation
+  document.getElementById('registerForm').addEventListener('submit', function (e) {
+    let isValid = true;
+
+    // Clear any previous errors
+    document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+
+    const firstName = document.getElementById('firstName');
+    const lastName = document.getElementById('lastName');
+    const email = document.getElementById('email');
+    const phone = document.getElementById('phone');
+    const address = document.getElementById('address');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const terms = document.getElementById('terms');
+    const passwordMatchError = document.getElementById('passwordMatchError');
+
+    const nameRegex = /^[A-Za-z]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10}$/;
+    const passwordRegex =/^(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
+
+    
+
+    // First Name
+    if (!nameRegex.test(firstName.value.trim())) {
+      firstName.classList.add('is-invalid');
+      isValid = false;
+    }
+
+    // Last Name
+    if (!nameRegex.test(lastName.value.trim())) {
+      lastName.classList.add('is-invalid');
+      isValid = false;
+    }
+
+    // Email
+    if (!emailRegex.test(email.value.trim())) {
+      email.classList.add('is-invalid');
+      isValid = false;
+    }
+
+    // Phone
+    if (!phoneRegex.test(phone.value.trim())) {
+      phone.classList.add('is-invalid');
+      isValid = false;
+    }
+
+    // Address
+    if (address.value.trim().length === 0) {
+      address.classList.add('is-invalid');
+      isValid = false;
+    }
+
+    // Password strength
+    if (!passwordRegex.test(password.value)) {
+      password.classList.add('is-invalid');
+      isValid = false;
+    }
+
+    // Confirm Password
+    if (password.value !== confirmPassword.value) {
+      confirmPassword.classList.add('is-invalid');
+      passwordMatchError.classList.remove('d-none');
+      isValid = false;
+    } else {
+      passwordMatchError.classList.add('d-none');
+    }
+
+    // Terms checkbox
+    if (!terms.checked) {
+      terms.classList.add('is-invalid');
+      isValid = false;
+    }
+
+    if (!isValid) {
+      e.preventDefault(); // Prevent form submission
+    }
+  });
+
+
+</script>
+{% endblock %}

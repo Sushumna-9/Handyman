@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="text-align: center; margin-top: 20px;">Submit Feedback</h2>
+<form method="POST" style="max-width: 500px; margin: 30px auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;">
+    <div class="form-group" style="margin-bottom: 15px;">
+        <label for="rating" style="display: block; font-weight: bold; margin-bottom: 5px;">Rating</label>
+        <select id="rating" name="rating" style="width: 150px; padding: 6px; font-size: 14px; border-radius: 5px; border: 1px solid #ccc;">
+            <option value="5">5 - Excellent</option>
+            <option value="4">4 - Good</option>
+            <option value="3">3 - Average</option>
+            <option value="2">2 - Below Average</option>
+            <option value="1">1 - Poor</option>
+        </select>
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+        <label for="comment" style="display: block; font-weight: bold; margin-bottom: 5px;">Comment (Optional)</label>
+        <textarea id="comment" name="comment" rows="3" style="width: 100%; padding: 8px; font-size: 14px; border-radius: 5px; border: 1px solid #ccc;"></textarea>
+    </div>
+    <button type="submit" style="background-color: #007bff; color: white; padding: 10px 16px; border: none; border-radius: 5px; cursor: pointer;">Submit Feedback</button>
+</form>
+{% endblock %}

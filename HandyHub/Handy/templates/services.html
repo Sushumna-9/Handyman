@@ -1,0 +1,126 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<header class="services-hero text-white">
+    <div class="container py-5 text-center">
+        <h1>Our Services</h1>
+        <p class="lead">Reliable and Professional Home Services at Your Fingertips</p>
+    </div>
+</header>
+
+<section class="services-list py-5">
+    <div class="container">
+
+        <!-- Electrical Repairs -->
+        <div class="row align-items-center mb-5">
+            <div class="col-md-6">
+                <div class="service-card position-relative" onclick="location.href='/handyman';" style="cursor: pointer;">
+                    <img src="{{ url_for('static', filename='electrical.jpg') }}" class="img-fluid rounded service-img" alt="Electrical Repairs">
+                    <div class="overlay d-flex justify-content-center align-items-center">
+                        <h3 class="text-white">View Handymen</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2>Electrical Repairs</h2>
+                <p>Our certified electricians handle everything from minor repairs to major installations. We ensure safety and efficiency with our expert services, including wiring, circuit repairs, panel upgrades, and outlet installations.</p>
+            </div>
+        </div>
+
+        <!-- Plumbing -->
+        <div class="row align-items-center mb-5 flex-md-row-reverse">
+            <div class="col-md-6">
+                <div class="service-card position-relative" onclick="location.href='/handyman';" style="cursor: pointer;">
+                    <img src="{{ url_for('static', filename='plumbing.jpg') }}" class="img-fluid rounded service-img" alt="Plumbing Services">
+                    <div class="overlay d-flex justify-content-center align-items-center">
+                        <h3 class="text-white">View Handymen</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2>Plumbing Services</h2>
+                <p>From fixing leaky faucets to installing new pipelines, our experienced plumbers provide high-quality plumbing solutions. We specialize in drain cleaning, water heater installation, pipe repairs, and complete plumbing maintenance.</p>
+            </div>
+        </div>
+
+        <!-- Carpentry -->
+        <div class="row align-items-center mb-5">
+            <div class="col-md-6">
+                <div class="service-card position-relative" onclick="location.href='/handyman';" style="cursor: pointer;">
+                    <img src="{{ url_for('static', filename='carpentry.jpg') }}" class="img-fluid rounded service-img" alt="Carpentry Services">
+                    <div class="overlay d-flex justify-content-center align-items-center">
+                        <h3 class="text-white">View Handymen</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2>Carpentry Services</h2>
+                <p>Our skilled carpenters create custom furniture, repair wooden structures, and offer tailored woodworking services. From cabinetry to decking, we bring craftsmanship and precision to every project.</p>
+            </div>
+        </div>
+
+        <!-- Gardening -->
+        <div class="row align-items-center mb-5 flex-md-row-reverse">
+            <div class="col-md-6">
+                <div class="service-card position-relative" onclick="location.href='/handyman';" style="cursor: pointer;">
+                    <img src="{{ url_for('static', filename='gardening.jpg') }}" class="img-fluid rounded service-img" alt="Gardening Services">
+                    <div class="overlay d-flex justify-content-center align-items-center">
+                        <h3 class="text-white">View Handymen</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2>Gardening Services</h2>
+                <p>Our gardening experts are here to design, maintain, and beautify your garden. Services include lawn mowing, plant care, landscaping, garden cleanups, and seasonal planting for a vibrant outdoor space.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+/* Hover Effects */
+.service-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.service-card img {
+    transition: transform 0.3s ease;
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}   
+
+.service-card:hover img {
+    transform: scale(1.05);
+}
+
+.service-card .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 10px;
+}
+
+.service-card:hover .overlay {
+    opacity: 1;
+}
+
+.service-card .overlay h3 {
+    font-size: 24px;
+    font-weight: bold;
+}
+</style>
+
+{% endblock %}

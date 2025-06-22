@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Provider Image & Details -->
+        <div class="col-md-4 text-center">
+            <img src="{{ url_for('static', filename='uploads/providers/' + provider.image) }}" class="img-fluid rounded-circle" alt="{{ provider.first_name }}">
+            <h2>{{ provider.first_name }} {{ provider.last_name }}</h2>
+            <p><strong>Service:</strong> {{ provider.service.name }}</p>
+            <p><strong>Experience:</strong> {{ provider.experience }} years</p>
+            <p><strong>Location:</strong> {{ provider.location }}</p>
+            <p><strong>Phone Number:</strong> {{ provider.phone }}</p>
+            <p><strong>Email:</strong> {{ provider.email }}</p>
+        </div>
+
+        <!-- Booking Form -->
+        <div class="col-md-6">
+            <h3>Book Now</h3>
+            <form action="{{ url_for('views.book_provider', provider_id=provider.id) }}" method="POST">
+                <div class="mb-3">
+                    <label for="booking_date" class="form-label">Select Date</label>
+                    <input type="date" class="form-control" id="booking_date" name="booking_date" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="booking_time" class="form-label">Select Time</label>
+                    <input type="time" class="form-control" id="booking_time" name="booking_time" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

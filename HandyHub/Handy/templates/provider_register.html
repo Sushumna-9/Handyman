@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <!-- Provider Registration Section -->
+    <section class="auth-section">
+      <div class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show mt-3" role="alert">
+        {{ message|safe }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+        <div class="row justify-content-center">
+          <div class="col-md-8 col-lg-6">
+            <div class="auth-card p-4 rounded-3">
+              <div class="text-center mb-4">
+                <i class="fas fa-user-cog auth-icon"></i>
+                <h2>Provider Sign Up</h2>
+                <p class="text-muted">Join HandyHub as a service provider and connect with customers</p>
+              </div>
+
+              <!-- ✅ Fix: Corrected form action -->
+              <form id="providerRegisterForm" action="{{ url_for('auth.provider_signup') }}" method="POST">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name" required>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6 mb-3">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter last name" required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="businessName" class="form-label">Business Name</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
+                    <input type="text" class="form-control" id="businessName" name="businessName" placeholder="Enter business name" required>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email Address</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="phone" class="form-label">Phone Number</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter phone number" required>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="serviceCategory" class="form-label">Service Category</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-tools"></i></span>
+                    <select class="form-control" id="serviceCategory" name="serviceCategory" required>
+                      <option value="">Select Service Category</option>
+                      {% for service in services %}
+                        <option value="{{ service.id }}">{{ service.name }}</option>
+                      {% endfor %}
+                    </select>
+                    
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="form-text">Password must be at least 8 characters long and include numbers and special characters.</div>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="confirmPassword" class="form-label">Confirm Password</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
+                  </div>
+                </div>
+                
+                <div class="mb-4">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="terms" required>
+                    <label class="form-check-label" for="terms">
+                      I agree to the <a href="{{ url_for('views.terms_of_service') }}" class="text-primary">Terms of Service</a> and
+                      <a href="{{ url_for('views.privacy_policy') }}" class="text-primary">Privacy Policy</a>
+                      </label>
+            </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100 mb-3">Create Account</button>
+                
+                <div class="text-center">
+                  <p class="mb-0">Already have an account? 
+                    <a href="{{ url_for('auth.provider_login') }}" class="text-primary">Login</a>
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      // Toggle password visibility
+      document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const icon = this.querySelector('i');
+        
+        if (passwordField.type === "password") {
+          passwordField.type = "text";
+          icon.classList.remove("fa-eye");
+          icon.classList.add("fa-eye-slash");
+        } else {
+          passwordField.type = "password";
+          icon.classList.remove("fa-eye-slash");
+          icon.classList.add("fa-eye");
+        }
+      });
+    
+      // Password confirmation validation
+      document.getElementById('providerRegisterForm').addEventListener('submit', function (e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const errorMsg = document.getElementById('passwordMatchError');
+        
+        if (password !== confirmPassword) {
+          e.preventDefault(); // Prevent form submission
+          errorMsg.classList.remove('d-none');
+        } else {
+          errorMsg.classList.add('d-none');
+        }
+      });
+    
+      // Form validation for provider signup
+      document.getElementById('providerRegisterForm').addEventListener('submit', function (e) {
+        let isValid = true;
+    
+        // Clear any previous errors
+        document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+    
+        const firstName = document.getElementById('firstName');
+        const lastName = document.getElementById('lastName');
+        const businessName = document.getElementById('businessName');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+        const serviceCategory = document.getElementById('serviceCategory');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const terms = document.getElementById('terms');
+        const passwordMatchError = document.getElementById('passwordMatchError');
+    
+        const nameRegex = /^[A-Za-z]+$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneRegex = /^[0-9]{10}$/;
+        const passwordRegex = /^(?=.[0-9])(?=.[!@#$%^&*]).{8,}$/;
+    
+        // First Name Validation
+        if (!nameRegex.test(firstName.value.trim())) {
+          firstName.classList.add('is-invalid');
+          isValid = false;
+        }
+    
+        // Last Name Validation
+        if (!nameRegex.test(lastName.value.trim())) {
+          lastName.classList.add('is-invalid');
+          isValid = false;
+        }
+    
+        // Business Name Validation
+        if (businessName.value.trim().length === 0) {
+          businessName.classList.add('is-invalid');
+          isValid = false;
+        }
+    
+        // Email Validation
+        if (!emailRegex.test(email.value.trim())) {
+          email.classList.add('is-invalid');
+          isValid = false;
+        }
+    
+        // Phone Validation
+        if (!phoneRegex.test(phone.value.trim())) {
+          phone.classList.add('is-invalid');
+          isValid = false;
+        }
+    
+        // Service Category Validation
+        if (!serviceCategory.value) {
+          serviceCategory.classList.add('is-invalid');
+          isValid = false;
+        }
+    
+        // Password Validation
+        if (!passwordRegex.test(password.value)) {
+          password.classList.add('is-invalid');
+          isValid = false;
+        }
+    
+        // Confirm Password Validation
+        if (password.value !== confirmPassword.value) {
+          confirmPassword.classList.add('is-invalid');
+          passwordMatchError.classList.remove('d-none');
+          isValid = false;
+        } else {
+          passwordMatchError.classList.add('d-none');
+        }
+    
+        // Terms and Conditions Checkbox Validation
+        if (!terms.checked) {
+          terms.classList.add('is-invalid');
+          isValid = false;
+        }
+    
+        // Prevent form submission if any field is invalid
+        if (!isValid) {
+          e.preventDefault();
+        }
+      });
+    </script>
+    
+{% endblock %}

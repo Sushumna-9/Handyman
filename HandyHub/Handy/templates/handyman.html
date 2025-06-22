@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='animate.css') }}">
+
+<!-- Handyman Hero -->
+<header class="handyman-hero">
+  <div class="container py-5 text-center">
+    <h1>Our Professional Handymen</h1>
+    <p class="lead">Meet our experienced and skilled professionals</p>
+  </div>
+</header>
+
+<!-- Service Category Dropdown -->
+<section class="search-section py-4 bg-light">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-4 text-center">
+        <select class="form-control" id="serviceCategory" name="serviceCategory" required>
+          <option value="all" {% if selected_service == "all" %}selected{% endif %}>All Services</option>
+          {% for service in services %}
+            <option value="{{ service.id }}" {% if service.id|string == selected_service %}selected{% endif %}>{{ service.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.getElementById('serviceCategory').addEventListener('change', function() {
+    const serviceId = this.value;
+    if (serviceId === "all") {
+      window.location.href = `/handyman`;
+    } else if (serviceId) {
+      window.location.href = `/handyman?serviceCategory=${serviceId}`;
+    }
+  });
+  </script>
+  
+
+<!-- 🏆 Recommended Handymen Section -->
+{% if recommended_providers %}
+<section class="recommended-handymen py-5">
+  <div class="container">
+    <h2 class="text-center mb-4 animate__animated animate__fadeInDown recommended-title">
+      🎯 Recommended for You 🚀
+    </h2>    
+    <div class="row">
+      {% for provider in recommended_providers %}
+      <div class="col-md-3 mb-4">
+        <div class="card animate__animated animate__fadeInUp">
+        <div class="handyman-card-small">
+          <div class="profile-img-container">
+          <img src="{{ url_for('static', filename='uploads/providers/' + provider.image) }}" alt="{{ provider.name }}" style="width: 100px; height: 100px; border-radius: 50%;">
+        </div>
+        <div class="handyman-info">
+            <h5 class="card-title">{{ provider.first_name }} {{ provider.last_name }}</h5>
+            <p class="service-type">{{ provider.business_name }}</p>
+           <!-- ⭐ Dynamic Stars -->
+<div>
+  {% set rating = provider.average_rating if provider.average_rating is defined else 0 %}
+  {% for i in range(1, 6) %}
+    {% if rating >= i %}
+      <i class="fas fa-star text-warning" style="animation: pop 0.5s ease forwards;"></i> <!-- Full star -->
+    {% elif rating >= i - 0.5 %}
+      <i class="fas fa-star-half-alt text-warning" style="animation: pop 0.5s ease forwards;"></i> <!-- Half star -->
+    {% else %}
+      <i class="far fa-star text-muted" style="animation: pop 0.5s ease forwards;"></i> <!-- Empty star -->
+    {% endif %}
+  {% endfor %}
+  <small>({{ rating|round(1) }})</small>
+</div>
+
+            <!-- Service and Price -->
+            <p class="card-text mt-2"><strong>Service:</strong> {{ provider.service.name }}</p>
+            <p class="card-text"><strong>Experience:</strong> {{ provider.experience }} years</p>
+    <!-- 🛠️ Add your Book Now button below -->
+    <a href="{{ url_for('views.book_provider', provider_id=provider.id) }}" class="btn btn-primary">
+      Book Now
+  </a>
+          </div>
+        </div>
+      </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- 🔥 All Handymen Section -->
+ 
+<section class="all-handymen py-5">
+  <h2 class="text-center mb-4 animate__animated animate__fadeInDown" style="color:black; font-weight: bold; font-size: 2.5rem;">
+    🛠️ All Handymen 🔧
+  </h2>  
+    <div class="row">
+      {% for provider in providers %}
+        <div class="col-md-3 mb-4">
+        <div class="card animate__animated animate__fadeInUp">
+        <div class="handyman-card-small">
+          <div class="profile-img-container">
+          <!-- Provider Image -->
+          <img src="{{ url_for('static', filename='uploads/providers/' + provider.image) }}" alt="{{ provider.name }}" style="width: 100px; height: 100px; border-radius: 50%;">
+</div>
+          <div class="handyman-info">
+
+            <!-- Provider Name -->
+            <h5 class="card-title">{{ provider.first_name }} {{ provider.last_name }}</h5>
+            <p class="service-type">{{ provider.business_name }}</p>
+
+             <!-- ⭐ Dynamic Stars -->
+<div>
+  {% set rating = provider.average_rating if provider.average_rating is defined else 0 %}
+  {% for i in range(1, 6) %}
+    {% if rating >= i %}
+      <i class="fas fa-star text-warning" style="animation: pop 0.5s ease forwards;"></i> <!-- Full star -->
+    {% elif rating >= i - 0.5 %}
+      <i class="fas fa-star-half-alt text-warning" style="animation: pop 0.5s ease forwards;"></i> <!-- Half star -->
+    {% else %}
+      <i class="far fa-star text-muted" style="animation: pop 0.5s ease forwards;"></i> <!-- Empty star -->
+    {% endif %}
+  {% endfor %}
+  <small>({{ rating|round(1) }})</small>
+</div>
+
+            <p class="card-text"><strong>Service:</strong> {{ provider.service.name }}</p>
+            <p class="card-text"><strong>Experience:</strong> {{ provider.experience if provider.experience else 0 }} years</p>
+            
+
+
+                <!-- 🛠️ Add your Book Now button below -->
+        <a href="{{ url_for('views.book_provider', provider_id=provider.id) }}" class="btn btn-primary">
+          Book Now
+        </a>
+          </div>
+        </div>
+      </div>
+      </div>
+      {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg text-center">
+                <div class="card-header bg-primary text-white">
+                    <h2>User Profile</h2>
+                </div>
+                <div class="card-body">
+                    <!-- Profile Image -->
+                    <div class="d-flex justify-content-center mb-3">
+                        <img id="profileImage" 
+                             src="{{ url_for('static', filename='uploads/providers/' + user.image) }}" 
+                             alt="Profile Picture" 
+                             class="rounded-circle shadow" 
+                             width="150" height="150">
+                    </div>
+
+                    <!-- Profile Display Mode -->
+                    <div id="displayMode">
+                        <h4 class="mb-1">{{ user.first_name }} {{ user.last_name }}</h4>
+                        
+                        <hr>
+
+                        <p><i class="fas fa-briefcase"></i> <strong>Email:</strong> {{ user.email}}</p>
+                        <p><i class="fas fa-user-tie"></i> <strong>Phone No:</strong> +91{{ user.phone }}</p>
+                        <p><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong> {{ user.address}}</p>
+
+                        <!-- Edit Profile Button -->
+                        <button class="btn btn-primary w-100 mt-3" onclick="toggleEdit(true)">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </button>
+                    </div>
+
+                    <!-- Profile Edit Mode (Hidden by Default) -->
+                    <form id="editMode" method="POST" enctype="multipart/form-data" class="d-none text-start">
+                        <div class="row">
+                            <!-- Left Column -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-user"></i> First Name</label>
+                                    <input type="text" class="form-control rounded-pill" name="first_name" value="{{ user.first_name }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-user"></i> Last Name</label>
+                                    <input type="text" class="form-control rounded-pill" name="last_name" value="{{ user.last_name }}">
+                                </div>
+
+                               
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-map-marker-alt"></i> Address</label>
+                                    <input type="text" class="form-control rounded-pill" name="address" value="{{ user.address }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-map-marker-alt"></i> Email</label>
+                                    <input type="text" class="form-control rounded-pill" name="email" value="{{ user.email }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-map-marker-alt"></i> Phone</label>
+                                    <input type="text" class="form-control rounded-pill" name="phone" value="{{ user.phone }}">
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            
+
+                                
+                                
+
+                                <!-- Profile Image Upload -->
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-image"></i> Profile Picture</label>
+                                    <input type="file" class="form-control rounded-pill" name="image" accept="image/*" onchange="previewImage(event)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-success rounded-pill px-4">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                            <button type="button" class="btn btn-secondary rounded-pill px-4" onclick="toggleEdit(false)">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Edit Mode & Image Preview -->
+<script>
+    function toggleEdit(editing) {
+        document.getElementById('displayMode').classList.toggle('d-none', editing);
+        document.getElementById('editMode').classList.toggle('d-none', !editing);
+    }
+
+    function previewImage(event) {
+        var output = document.getElementById('profileImage');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
+{% endblock %}

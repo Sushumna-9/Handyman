@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Booking History</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>#</td>
+                <th>Provider Name</th>
+                <th>Provider Company</th>
+                <th>Mobile Number</th>
+                <th>Service Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+                <th>Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{booking.provider.first_name}}</td>
+                <td>{{ booking.provider.business_name }}</td>
+                <td>{{booking.provider.phone}}</td>
+                <td>{{ booking.booking_date.strftime('%Y-%m-%d') }} {{ booking.booking_time.strftime('%H:%M') }}</td>
+                <td>
+                    <span class="badge 
+                        {% if booking.status == 'Pending' %} bg-warning 
+                        {% elif booking.status == 'Confirmed' %} bg-primary 
+                        {% elif booking.status == 'Completed' %} bg-success 
+                        {% elif booking.status == 'Cancelled' %} bg-danger 
+                        {% elif booking.status == 'Rejected' %} bg-danger 
+                        {% endif %}">
+                        {{ booking.status }}
+                    </span>
+                </td>
+                <td>
+                    {% if booking.status == 'Pending' %}
+                        <a href="{{ url_for('views.cancel_booking', booking_id=booking.id) }}" class="btn btn-danger btn-sm">Cancel</a>
+                    {% else %}
+                        <span class="text-muted">No actions</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if booking.status == 'Completed' %}
+                        {% if feedback_status[booking.id] %}
+                            <button class="btn btn-secondary" disabled>Feedback Submitted</button>
+                        {% else %}
+                            <a href="{{ url_for('views.submit_feedback', booking_id=booking.id) }}" class="btn btn-success">Provide Feedback</a>
+                        {% endif %}
+                    {% else %}
+                        <span class="text-muted">No actions</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="text-center">No bookings found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+      <!-- About Hero -->
+      <header class="about-hero text-white">
+        <div class="container py-5 text-center">
+          <h1 class="display-4 fw-bold">About HandyHub</h1>
+          <p class="lead fs-4">Your Trusted Partner for Professional Home Services</p>
+        </div>
+      </header>
+  
+      <!-- About Content -->
+      <section class="about-content py-5">
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <h2 class="mb-4">Our Story</h2>
+              <p>HandyHub was founded with a simple mission: to make home maintenance and repairs hassle-free for homeowners. We understand that finding reliable, skilled professionals for your home services can be challenging. That's why we've created a platform that connects you with verified experts who can handle all your home service needs.</p>
+              <p>Since our inception, we've served thousands of satisfied customers and continue to grow our network of professional handymen who share our commitment to quality and customer satisfaction.</p>
+            </div>
+            <div class="col-lg-6">
+              <div class="about-stats p-4 bg-light rounded-lg">
+                <div class="row text-center g-4">
+                  <div class="col-6">
+                    <div class="stat-item">
+                      <i class="fas fa-users feature-icon mb-3"></i>
+                      <h3>10,000+</h3>
+                      <p>Happy Customers</p>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="stat-item">
+                      <i class="fas fa-tools feature-icon mb-3"></i>
+                      <h3>500+</h3>
+                      <p>Expert Handymen</p>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="stat-item">
+                      <i class="fas fa-check-circle feature-icon mb-3"></i>
+                      <h3>15,000+</h3>
+                      <p>Jobs Completed</p>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="stat-item">
+                      <i class="fas fa-star feature-icon mb-3"></i>
+                      <h3>4.8/5</h3>
+                      <p>Average Rating</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- Our Values -->
+      <section class="our-values py-5 bg-light">
+        <div class="container">
+          <h2 class="text-center mb-5">Our Values</h2>
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="value-card text-center p-4">
+                <i class="fas fa-heart feature-icon mb-3"></i>
+                <h4>Customer First</h4>
+                <p>We prioritize customer satisfaction in everything we do, ensuring the best possible service experience.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="value-card text-center p-4">
+                <i class="fas fa-certificate feature-icon mb-3"></i>
+                <h4>Quality Service</h4>
+                <p>Our handymen are thoroughly vetted and trained to deliver high-quality workmanship.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="value-card text-center p-4">
+                <i class="fas fa-handshake feature-icon mb-3"></i>
+                <h4>Trust & Reliability</h4>
+                <p>Building long-term relationships through honest, reliable, and professional service.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- FAQ Section -->
+      <section class="faq py-5">
+        <div class="container">
+          <h2 class="text-center mb-5">Frequently Asked Questions</h2>
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                  <h3 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                      How do I book a service?
+                    </button>
+                  </h3>
+                  <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                      Booking a service is easy! Simply select the service you need, choose your preferred handyman, and schedule a convenient time. You can book through our website or mobile app.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                      Are your handymen verified?
+                    </button>
+                  </h3>
+                  <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                      Yes, all our handymen undergo thorough background checks and skill verification. We ensure they have the necessary qualifications and experience before joining our platform.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                      What is your cancellation policy?
+                    </button>
+                  </h3>
+                  <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                      You can cancel or reschedule your booking up to 24 hours before the scheduled service time without any charges. Late cancellations may incur a small fee.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+
+   {% endblock %}

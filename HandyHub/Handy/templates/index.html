@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <header class="hero">
+      <div class="hero-overlay">
+        <div class="container text-center">
+          <h1>HandyHub</h1>
+          <p class="lead">A Smart Way to Fix Your Home</p>
+          <!--<a href="{{ url_for('auth.customer_login') }}" class="btn btn-primary btn-lg">Book a Service</a> -->
+          {% if current_user.is_authenticated %}
+          <!-- If logged in, go to handyman page -->
+            <a href="{{ url_for('views.handyman') }}" class="btn btn-primary btn-lg">Book a Service</a>
+          {% else %}
+          <!-- If not logged in, go to login page -->
+            <a href="{{ url_for('auth.customer_login') }}" class="btn btn-primary btn-lg">Book a Service</a>
+          {% endif %}
+
+        </div>
+      </div>
+    </header>
+
+    
+    <section class="services py-5">
+      <div class="container">
+        <h2 class="text-center mb-5">Our Services</h2>
+        <div class="row g-4">
+          <div class="col-md-3">
+            <div class="service-card text-center">
+              <div class="service-icon-wrapper">
+                <img src="{{ url_for('static', filename='electrical.jpg') }}" alt="electrical" class="electrical" onclick="FullView(this.src)">
+              </div>
+              <h5 class="service-title">Electrical Repairs</h5>
+              <p class="service-text">Professional electrical repair and installation services for your home.</p>
+              <a href="{{ url_for('views.services') }}"  class="btn btn-outline-primary">Learn More</a>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="service-card text-center">
+              <div class="service-icon-wrapper">
+                <img src="{{ url_for('static', filename='plumbing.jpg') }}" alt="plumbing" class="plumbing">
+              </div>
+              <h5 class="service-title">Plumbing</h5>
+              <p class="service-text">Expert plumbing solutions for all your household needs.</p>
+              <a href="{{ url_for('views.services') }}" class="btn btn-outline-primary">Learn More</a>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="service-card text-center">
+              <div class="service-icon-wrapper">
+                <img src="{{ url_for('static', filename='carpentry.jpg') }}" alt="carpentry" class="carpentry">
+              </div>
+              <h5 class="service-title">Carpentry</h5>
+              <p class="service-text">Custom carpentry and woodworking services for your home.</p>
+              <a href="{{ url_for('views.services') }}" class="btn btn-outline-primary">Learn More</a>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="service-card text-center">
+              <div class="service-icon-wrapper">
+                <img src="{{ url_for('static', filename='gardening.jpg') }}" alt="gardening" class="gardening">
+              </div>
+              <h5 class="service-title">Gardening</h5>
+              <p class="service-text">Professional garden maintenance and landscaping services.</p>
+              <a href="{{ url_for('views.services') }}" class="btn btn-outline-primary">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+   
+
+    <!-- Why Choose Us -->
+    <section class="why-us py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-5">Why Choose HandyHub?</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="feature text-center">
+              <div class="feature-image mb-4">
+                <img src="https://img.icons8.com/color/96/000000/verified-badge.png" alt="Verified Professionals" class="img-fluid">
+              </div>
+              <h4>Verified Professionals</h4>
+              <p>All our handymen are thoroughly vetted and professionally trained.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature text-center">
+              <div class="feature-image mb-4">
+                <img src="https://img.icons8.com/color/96/000000/time.png" alt="On-Time Service" class="img-fluid">
+              </div>
+              <h4>On-Time Service</h4>
+              <p>We value your time and ensure punctual service delivery.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature text-center">
+              <div class="feature-image mb-4">
+                <img src="https://img.icons8.com/color/96/000000/guarantee.png" alt="Satisfaction Guaranteed" class="img-fluid">
+              </div>
+              <h4>Satisfaction Guaranteed</h4>
+              <p>Your satisfaction is our top priority, backed by our service guarantee.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% endblock %}
